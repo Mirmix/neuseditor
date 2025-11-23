@@ -1,52 +1,79 @@
-## NeuSEditor: From Multi-View Images to Text-Guided Neural Surface Edits (Official Implementation)
+<h2 align="center">NeuSEditor</h2>
+<p align="center"><b>From Multi-View Images to Text-Guided Neural Surface Edits</b> <br>
+<em>Official Implementation</em></p>
 
-Project page: [https://neuseditor.github.io/](https://neuseditor.github.io/)
+<p align="center">
+  <a href="https://neuseditor.github.io/">
+    <img src="https://img.shields.io/badge/Project%20Page-Link-blue?style=for-the-badge">
+  </a>
+</p>
 
-This repository provides the official implementation of NeuSEditor, enabling text-guided neural surface edits from multi-view images. 
+<p align="center">
+  <img src="assets/teaser.gif" alt="NeuSEditor Teaser" width="600">
+</p>
 
-![Teaser](assets/teaser.gif)
+<p align="center">
+  NeuSEditor enables <b>text-guided neural surface editing</b> directly from multi-view images.<br>
+  This repository contains the official code and instructions to reproduce our results.
+</p>
 
-### Environment
+### Environment Setup
 
-- Tested on NVIDIA RTX A6000, A100, and H100.
-- Recommended: CUDA 11.8/12.1 with PyTorch 2.1, as specified in `environment.yml`.
+NeuSEditor is tested on NVIDIA RTX A6000, A100, and H100 GPUs.
+- **Recommended:** CUDA 11.8 or 12.1, PyTorch 2.1 (see `environment.yml` for details).
 
-Create the Conda environment:
+To get started, create and activate the Conda environment:
 
 ```bash
 conda env create -f environment.yml
 conda activate neus_editor
 ```
 
-Verify GPU is visible:
+You can verify that your GPU is accessible and CUDA versions are correct with:
 
 ```bash
 python -c "import torch; print(torch.cuda.is_available(), torch.version.cuda, torch.__version__)"
 ```
 
-### Datasets
 
-- NeRF-Synthetic (Blender): Download the dataset and place under `load/` so paths look like `load/nerf_synthetic/lego`  
-  Link: https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1
+### 📦 Datasets
 
-- DTU (preprocessed by NeuS): Download and use in conjunction with the DTU config  
-  Link: https://drive.google.com/drive/folders/1Nlzejs4mfPuJYORLbDEUDWlc9IZIbU0C?usp=sharing
+**NeRF-Synthetic (Blender)**
+- **Download:** [Google Drive Link](https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1)
+- **Usage:** Place the downloaded folders under `load/`, e.g.:  
+  ```
+  load/nerf_synthetic/lego
+  ```
 
-### Quick Start
+**DTU (Preprocessed by NeuS)**
+- **Download:** [Google Drive Link](https://drive.google.com/drive/folders/1Nlzejs4mfPuJYORLbDEUDWlc9IZIbU0C?usp=sharing)
+- **Usage:** Use these scans with the DTU config.
 
-Training commands (adjust flags as needed):
+---
 
-- NeRF-Synthetic (Blender)
+### 🚀 Quick Start
+
+Below are example commands to launch training for several supported datasets. Adjust command-line flags as needed.
+
+<details>
+<summary><strong>NeRF-Synthetic (Blender)</strong></summary>
+
 ```bash
 python launch.py --config configs/blender.yaml --gpu 0 --train tag=example
 ```
+</details>
 
-- DTU
+<details>
+<summary><strong>DTU</strong></summary>
+
 ```bash
 python launch.py --config configs/dtu.yaml --gpu 0 --train
 ```
+</details>
 
-- Example (DTU scan24, church prompt)
+<details>
+<summary><strong>Example DTU <em>(scan24, church prompt)</em></strong></summary>
+
 ```bash
 python launch.py --config configs/dtu.yaml --gpu 0 \
   tag=scan24_church_gs350 \
@@ -55,11 +82,16 @@ python launch.py --config configs/dtu.yaml --gpu 0 \
   dataset.root_dir=../data/DTU/scan24 \
   --train
 ```
+</details>
 
-- Custom COLMAP
+<details>
+<summary><strong>Custom COLMAP</strong></summary>
+
 ```bash
 python launch.py --config configs/colmap.yaml --gpu 0 --train
 ```
+</details>
+
 
 ### Training on Custom COLMAP Data
 
